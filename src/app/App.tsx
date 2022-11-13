@@ -4,14 +4,10 @@ import Login from "pages/Login/Login"
 import Auth from "./Auth/Auth"
 import RequireAuth from "./Auth/RequireAuth"
 import Layout from "./Layout/Layout"
-
-const Home = function () {
-    return <h1>Home</h1>
-}
-
-const Neda = function () {
-    return <h1>Neda</h1>
-}
+import StrategiesDashboard from "pages/Strategy/StrategiesDashboard/StrategiesDashboard"
+import StrategyCreate from "pages/Strategy/StrategyCreate/StrategyCreate"
+import StrategyDetail from "pages/Strategy/StrategyDetail/StrategyDetail"
+import StrategyEdit from "pages/Strategy/StrategyEdit/StrategyEdit"
 
 function App() {
     return (
@@ -26,8 +22,15 @@ function App() {
                         </RequireAuth>
                     }
                 >
-                    <Route index element={<Home />} />
-                    <Route path="neda" element={<Neda />} />
+                    <Route index element={<StrategiesDashboard />} />
+                    <Route path="strategies">
+                        <Route index element={<StrategiesDashboard />} />
+                        <Route path="create" element={<StrategyCreate />} />
+                        <Route path=":id">
+                            <Route index element={<StrategyDetail />} />
+                            <Route path="edit" element={<StrategyEdit />} />
+                        </Route>
+                    </Route>
                 </Route>
 
                 {/* Public paths */}
