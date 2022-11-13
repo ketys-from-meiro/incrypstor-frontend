@@ -1,0 +1,61 @@
+@use "scss/colors";
+
+.nav {
+    height: 59px;
+    border-bottom: 1px solid colors.$border;
+    box-sizing: border-box;
+
+    h1 {
+        margin: 0;
+    }
+}
+
+.navContent {
+    margin: 0 auto;
+    width: 96%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.tabs {
+    button {
+        color: colors.$primary;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        font-weight: 500;
+        font-size: 16px;
+        height: 60px;
+        box-sizing: border-box;
+        padding-left: 18px;
+        padding-right: 18px;
+        transition: all 0.15s ease-out;
+
+        &.active {
+            border-bottom: 3px solid colors.$primary;
+        }
+
+        &:hover {
+            background: colors.$primary;
+            color: colors.$white;
+        }
+    }
+}
+
+.account {
+    color: colors.$primary;
+}
+
+.content {
+    margin: 75px auto 0;
+    width: 96%;
+    max-width: 1200px;
+}
+
+.logoutBtn {
+    margin-left: 10px;
+}
