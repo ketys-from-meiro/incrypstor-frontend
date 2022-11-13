@@ -11,11 +11,14 @@ function Login() {
 
     return (
         <section className={styles.login}>
-            <div className={styles.leftPart}>
-                <h1>InCrypstor</h1>
-                <p>Makes crypto investments simple.</p>
-                <Button onClick={() => walletConnect()}>Connect wallet</Button>
+            <div className={styles.content}>
+                <div>
+                    <h1>InCrypstor</h1>
+                    <p>Makes crypto investments simple.</p>
+                    <Button onClick={() => walletConnect()}>Connect wallet</Button>
+                </div>
             </div>
+            <div className={styles.bg}></div>
         </section>
     )
 }

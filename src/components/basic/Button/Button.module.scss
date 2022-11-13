@@ -1,14 +1,51 @@
-.button {
-    border: 1px solid #999999;
-    cursor: pointer;
+@use "scss/colors";
 
+.button {
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    transition: all 0.15s ease-out;
+
+    // colors
     &.primary {
-        border-color: red;
-        color: red;
+        border: 1px solid colors.$primary;
+        background-color: colors.$primary;
+        color: colors.$white;
+
+        &:hover {
+            background-color: colors.$white;
+            color: colors.$primary;
+        }
     }
 
     &.secondary {
-        border-color: green;
-        color: green;
+        border: 1px solid colors.$secondary;
+        background-color: colors.$secondary;
+        color: colors.$white;
+
+        &:hover {
+            background-color: colors.$white;
+            color: colors.$secondary;
+        }
+    }
+
+    // sizes
+    &.sm {
+        height: 34px;
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+
+    &.md {
+        height: 44px;
+        font-size: 15px;
+        padding: 8px 12px;
+    }
+
+    &.lg {
+        height: 52px;
+        font-size: 17px;
+        padding: 10px 14px;
     }
 }

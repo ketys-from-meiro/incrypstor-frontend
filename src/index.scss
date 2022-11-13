@@ -1,8 +1,12 @@
+@use "scss/colors";
 @import-normalize;
 
-:root { font-family: 'Inter', sans-serif; }
+* {
+    font-family: 'Inter', sans-serif;
+}
+
 @supports (font-variation-settings: normal) {
-    :root { font-family: 'Inter var', sans-serif; }
+    * { font-family: 'Inter var', sans-serif; }
 }
 
 body {
@@ -13,4 +17,8 @@ body {
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: colors.$primary;
 }
