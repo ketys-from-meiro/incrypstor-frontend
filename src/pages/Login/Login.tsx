@@ -1,13 +1,21 @@
+import useAuth from "app/Auth/useAuth"
 import Button from "components/basic/Button/Button"
-import React from "react"
-import { useConnect } from "wagmi"
-import { InjectedConnector } from "wagmi/connectors/injected"
+import React, { useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import styles from "./Login.module.scss"
 
 function Login() {
-    const { connect: walletConnect } = useConnect({
-        connector: new InjectedConnector(),
-    })
+    const auth = useAuth()
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const from = location.state?.from?.pathname || "/"
+
+    useEffect(() => {
+        if (auth.address) {
+            navigate(from, { replace: true })
+        }
+    }, [auth.address, navigate, from])
 
     return (
         <section className={styles.login}>
@@ -15,7 +23,7 @@ function Login() {
                 <div>
                     <h1>InCrypstor</h1>
                     <p>Makes crypto investments simple.</p>
-                    <Button onClick={() => walletConnect()}>Connect wallet</Button>
+                    <Button onClick={() => auth.connect()}>Connect wallet</Button>
                 </div>
             </div>
             <div className={styles.bg}></div>
