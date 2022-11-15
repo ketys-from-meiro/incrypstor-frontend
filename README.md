@@ -1,1 +1,6 @@
 # InCrypstor frontend
+
+## Tokens Addresses for Gorli
+
+-   WETH: 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6
+-   WBTC: 0xC04B0d3107736C32e19F1c62b2aF67BE61d63a05

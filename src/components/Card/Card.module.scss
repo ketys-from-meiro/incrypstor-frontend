@@ -1,0 +1,8 @@
+@use "scss/colors";
+
+.card {
+    padding: 15px;
+    box-sizing: border-box;
+    border: 1px solid colors.$border;
+    background: colors.$bg;
+}

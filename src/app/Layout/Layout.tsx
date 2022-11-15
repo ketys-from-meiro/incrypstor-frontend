@@ -1,5 +1,5 @@
 import useAuth from "app/Auth/useAuth"
-import Button from "components/basic/Button/Button"
+import Button from "components/Button/Button"
 import React from "react"
 import { Outlet } from "react-router-dom"
 import styles from "./Layout.module.scss"

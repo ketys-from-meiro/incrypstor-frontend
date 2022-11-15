@@ -1,0 +1,51 @@
+@use "scss/colors";
+
+.strategyCard {
+    h2 {
+        margin: 0 0 8px;
+    }
+
+    .values {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .valueContainer {
+        label {
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 500;
+            color: colors.$grey;
+            margin-bottom: 3px;
+        }
+
+        > span {
+            display: block;
+            font-weight: 700;
+        }
+
+        .red {
+            color: colors.$red;
+        }
+
+        .green {
+            color: colors.$green;
+        }
+    }
+
+    .tokensLogos {
+        border-top: 1px solid colors.$border;
+        border-bottom: 1px solid colors.$border;
+        margin: 15px 0;
+        padding: 10px 0;
+
+        img {
+            margin-right: 5px;
+        }
+    }
+
+    .actionButtons {
+        display: flex;
+        justify-content: space-between;
+    }
+}

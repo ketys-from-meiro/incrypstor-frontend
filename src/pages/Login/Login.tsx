@@ -1,5 +1,5 @@
 import useAuth from "app/Auth/useAuth"
-import Button from "components/basic/Button/Button"
+import Button from "components/Button/Button"
 import React, { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import styles from "./Login.module.scss"
