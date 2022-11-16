@@ -1,0 +1,23 @@
+@use "scss/colors";
+
+.createNewStrategyCard {
+    height: 239px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease-out;
+
+    > img {
+        width: 70.1%;
+    }
+
+    &:hover {
+        background-color: colors.$bg-hover;
+    }
+
+    .createBtn {
+        &:hover {
+            background: colors.$primary;
+            color: colors.$white;
+        }
+    }
+}

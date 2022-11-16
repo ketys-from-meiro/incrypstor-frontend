@@ -1,4 +1,5 @@
 import React from "react"
+import CreateNewStrategyCard from "./components/CreateNewStrategyCard/CreateNewStrategyCard"
 import StrategyCard, { StrategyCardProps } from "./components/StrategyCard/StrategyCard"
 import styles from "./StrategiesDashboard.module.scss"
 
@@ -32,6 +33,7 @@ function StrategiesDashboard() {
             {userStrategies.map(strategy => (
                 <StrategyCard key={strategy.id} {...strategy} />
             ))}
+            <CreateNewStrategyCard />
         </div>
     )
 }
