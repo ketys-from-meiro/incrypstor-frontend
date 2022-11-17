@@ -8,15 +8,27 @@ type ButtonProps = {
     color?: "primary" | "secondary"
     size?: "sm" | "md" | "lg"
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+    type?: "button" | "submit"
+    isLoading?: boolean
 }
 
-function Button({ children, className, color = "primary", size = "md", ...rest }: ButtonProps) {
+function Button({
+    children,
+    className,
+    color = "primary",
+    size = "md",
+    type = "button",
+    isLoading = false,
+    ...rest
+}: ButtonProps) {
     return (
         <button
-            className={classnames(styles.button, className, styles[color], styles[size])}
+            className={classnames(styles.button, className, styles[color], styles[size], {
+                [styles.isLoading]: isLoading,
+            })}
             {...rest}
         >
-            {children}
+            <span>{children}</span>
         </button>
     )
 }

@@ -1,4 +1,5 @@
 @use "scss/colors";
+@use "scss/animations" as *;
 
 .button {
     cursor: pointer;
@@ -6,6 +7,7 @@
     letter-spacing: -0.01em;
     font-weight: 500;
     transition: all 0.15s ease-out;
+    border-radius: 8px;
 
     // colors
     &.primary {
@@ -47,5 +49,55 @@
         height: 52px;
         font-size: 17px;
         padding: 10px 14px;
+    }
+
+    &.isLoading {
+        position: relative;
+        cursor: wait;
+
+        &:before {
+            margin: -13px 0 0 -13px;
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            content: "";
+            border-radius: 24px;
+            background-clip: padding-box;
+            border-color: rgba(colors.$white, 0.25);
+            border-width: 2px;
+            border-style: solid;
+            border-top-color: colors.$white;
+            animation: animation-rotate 975ms cubic-bezier(0.25, 0.35, 0.5, 0.95) infinite;
+        }
+
+        &.sm {
+            &:before {
+                width: 18px;
+                height: 18px;
+                margin: -11px 0 0 -11px;
+            }
+        }
+
+        &:hover {
+            &.primary {
+                &:before {
+                    border-color: rgba(colors.$primary, 0.25);
+                    border-top-color: colors.$primary;
+                }
+            }
+
+            &.secondary {
+                &:before {
+                    border-color: rgba(colors.$secondary, 0.25);
+                    border-top-color: colors.$secondary;
+                }
+            }
+        }
+      
+        span {
+            color: transparent;
+        }
     }
 }

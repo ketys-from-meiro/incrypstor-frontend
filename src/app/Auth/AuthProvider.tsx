@@ -1,6 +1,5 @@
 import React from "react"
 import { useAccount, useConnect, useDisconnect } from "wagmi"
-import { InjectedConnector } from "wagmi/connectors/injected"
 import AuthContext from "./AuthContext"
 
 type AuthProviderProps = {
@@ -9,13 +8,11 @@ type AuthProviderProps = {
 
 function AuthProvider({ children }: AuthProviderProps) {
     const { address } = useAccount()
-    const { connect } = useConnect({
-        connector: new InjectedConnector(),
-    })
+    const { connect, connectors } = useConnect()
     const { disconnect } = useDisconnect()
 
     return (
-        <AuthContext.Provider value={{ address, connect, disconnect }}>
+        <AuthContext.Provider value={{ address, connector: connectors[0], connect, disconnect }}>
             {children}
         </AuthContext.Provider>
     )

@@ -4,6 +4,8 @@ import React from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import styles from "./Layout.module.scss"
 import { shortenAddress } from "./layoutUtils"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Layout = function () {
     const auth = useAuth()
@@ -35,6 +37,18 @@ const Layout = function () {
             <div className={styles.content}>
                 <Outlet />
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </>
     )
 }

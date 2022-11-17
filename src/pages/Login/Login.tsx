@@ -23,7 +23,9 @@ function Login() {
                 <div>
                     <h1>InCrypstor</h1>
                     <p>Makes crypto investments simple.</p>
-                    <Button onClick={() => auth.connect()}>Connect wallet</Button>
+                    <Button onClick={() => auth.connect({ connector: auth.connector })}>
+                        Connect wallet
+                    </Button>
                 </div>
             </div>
             <div className={styles.bg}></div>

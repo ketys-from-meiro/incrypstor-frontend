@@ -1,0 +1,92 @@
+@use "scss/colors";
+
+.textField {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    padding-bottom: 20px;
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid colors.$border;
+        border-radius: 8px;
+        padding: 11px 15px;
+        transition: 0.15s all ease-out;
+        background: colors.$white;
+        font-size: 16px;
+        line-height: 20px;
+
+        &:hover {
+            border: 1px solid darken(colors.$border, 30%);
+        }
+
+        &:focus {
+            outline: none;
+            border: 1px solid colors.$primary;
+            box-shadow: 0 1px 3px 0px rgba(colors.$primary, 0.25);
+        }
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+    }
+
+    &.hasError {
+        input {
+            border: 1px solid colors.$red;
+            box-shadow: 0 1px 3px 0px rgba(colors.$red, 0.25);
+        }
+    }
+
+    label {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 500;
+        color: colors.$grey;
+        margin-bottom: 3px;
+        display: block;
+        margin: 0 0 3px 5px;
+    }
+
+    .errorMessage {
+        font-size: 10px;
+        line-height: 10px;
+        color: colors.$red;
+        margin: 2px 5px;
+        position: absolute;
+    }
+
+    .inputWrapper {
+        position: relative;
+
+        &.hasSufixText {
+            input {
+                padding-right: 60px;
+                text-align: right;
+            }
+        }
+
+        .sufixText {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            height: 42px;
+            width: 42px;
+            line-height: 42px;
+            text-align: center;
+            background-color: lighten(colors.$secondary, 30%);
+            font-weight: 500;
+            border-left: 1px solid colors.$border;
+            font-size: 16px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    }
+}

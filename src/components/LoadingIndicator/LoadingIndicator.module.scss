@@ -1,0 +1,26 @@
+@use "scss/colors";
+@use "scss/animations" as *;
+
+.loadingIndicator {
+    width: 100%;
+    height: 28px;
+    position: relative;
+    cursor: wait;
+    
+    &:before {
+        width: 24px;
+        height: 24px;
+        margin: -14px 0 0 -14px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        content: "";
+        border-radius: 50%;
+        background-clip: padding-box;
+        border-color: rgba(colors.$primary, 0.25);
+        border-width: 2px;
+        border-style: solid;
+        border-top-color: colors.$primary;
+        animation: animation-rotate 975ms cubic-bezier(0.25, 0.35, 0.5, 0.95) infinite;
+    }
+}

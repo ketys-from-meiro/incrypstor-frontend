@@ -22,3 +22,8 @@ code {
 h1, h2, h3, h4, h5, h6 {
     color: colors.$primary;
 }
+
+// override for toast container position
+.Toastify__toast-container--top-right {
+    margin-top: 50px;
+}
