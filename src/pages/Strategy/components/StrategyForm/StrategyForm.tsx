@@ -10,11 +10,7 @@ import TextField from "components/TextField/TextField"
 import Button from "components/Button/Button"
 import { numberInRange, required } from "utils/validation"
 import TokenLogo from "components/TokenLogo/TokenLogo"
-
-type TokenParams = {
-    addr: `0x${string}`
-    percentage: number
-}
+import { TokenParams } from "pages/Strategy/strategyTypes"
 
 export type StrategyFormData = {
     name: string
@@ -44,7 +40,6 @@ function StrategyForm({ onSubmit, submitting }: StrategyFormProps) {
             tokensParams: approvedTokens
                 ? approvedTokens.map(token => ({
                       addr: token.addr,
-                      symbol: token.symbol,
                       percentage: 0,
                   }))
                 : [],
@@ -61,7 +56,17 @@ function StrategyForm({ onSubmit, submitting }: StrategyFormProps) {
 
     return (
         <Card className={styles.strategyForm}>
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form
+                onSubmit={handleSubmit(data => {
+                    onSubmit({
+                        ...data,
+                        tokensParams: data.tokensParams.filter(
+                            tokenParam => tokenParam.percentage !== 0,
+                        ),
+                    })
+                })}
+                noValidate
+            >
                 <TextField
                     error={errors.name?.message}
                     label="Strategy name"

@@ -45,6 +45,17 @@ export default [
     {
         inputs: [
             {
+                internalType: "address",
+                name: "token",
+                type: "address",
+            },
+        ],
+        name: "InvalidZeroPercentage",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
                 internalType: "uint8",
                 name: "maxCount",
                 type: "uint8",
@@ -174,7 +185,7 @@ export default [
                 type: "address",
             },
             {
-                indexed: false,
+                indexed: true,
                 internalType: "uint256",
                 name: "strategyId",
                 type: "uint256",
@@ -193,9 +204,15 @@ export default [
                 type: "address",
             },
             {
-                indexed: false,
+                indexed: true,
                 internalType: "uint256",
                 name: "strategyId",
+                type: "uint256",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "timestamp",
                 type: "uint256",
             },
             {
@@ -284,11 +301,22 @@ export default [
         type: "function",
     },
     {
-        inputs: [],
-        name: "getYourStrategies",
+        inputs: [
+            {
+                internalType: "address",
+                name: "address_",
+                type: "address",
+            },
+        ],
+        name: "getUserStrategies",
         outputs: [
             {
                 components: [
+                    {
+                        internalType: "uint256",
+                        name: "id",
+                        type: "uint256",
+                    },
                     {
                         internalType: "string",
                         name: "name",
@@ -323,15 +351,25 @@ export default [
     {
         inputs: [
             {
+                internalType: "address",
+                name: "address_",
+                type: "address",
+            },
+            {
                 internalType: "uint256",
                 name: "strategyId_",
                 type: "uint256",
             },
         ],
-        name: "getYourStrategy",
+        name: "getUserStrategy",
         outputs: [
             {
                 components: [
+                    {
+                        internalType: "uint256",
+                        name: "id",
+                        type: "uint256",
+                    },
                     {
                         internalType: "string",
                         name: "name",
