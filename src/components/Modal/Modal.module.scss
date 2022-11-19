@@ -1,0 +1,62 @@
+@use "scss/colors";
+
+.modalWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 100;
+    overflow-x: hidden;
+    overflow-y: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.modal {
+    width: 560px;
+    background-color: colors.$white;
+    border-radius: 8px;
+    box-shadow: 0px 3px 6px rgba(colors.$black, 0.05);
+    position: relative;
+    z-index: 101;
+    padding: 30px;
+
+    header {
+        position: relative;
+        h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 15px;
+            min-height: 16px;
+        }
+
+        .closeButton {
+            position: absolute;
+            top: -3px;
+            right: -5px;
+            background: transparent;
+            border: 0;
+            color: colors.$grey;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            font-size: 16px;
+
+            &:hover {
+                color: colors.$black;
+            }
+        }
+    }
+}
+
+.modalOverlay {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(colors.$black, 0.5);
+}

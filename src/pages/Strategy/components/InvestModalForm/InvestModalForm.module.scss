@@ -1,0 +1,27 @@
+@use "scss/colors";
+
+.investModalForm {
+    display: flex;
+
+    .investButton {
+        margin-left: 10px;
+
+        > span {
+            display: flex;
+            align-items: center;
+
+            svg {
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
+.waitingForTxMessage {
+    color: colors.$grey;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: -15px;
+}

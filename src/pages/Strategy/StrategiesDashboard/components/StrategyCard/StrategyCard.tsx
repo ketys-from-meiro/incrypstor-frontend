@@ -5,10 +5,8 @@ import Card from "components/Card/Card"
 import TokenLogo from "components/TokenLogo/TokenLogo"
 import Button from "components/Button/Button"
 import { TokenParams } from "pages/Strategy/strategyTypes"
-import { BigNumber } from "ethers"
 
 export type StrategyCardProps = {
-    id: BigNumber
     className?: string
     name: string
     value?: number
@@ -18,10 +16,10 @@ export type StrategyCardProps = {
     valueError?: string
     loadingEarnings: boolean
     earningsError?: string
+    onInvestClick: () => void
 }
 
 function StrategyCard({
-    id,
     className,
     name,
     value,
@@ -31,6 +29,7 @@ function StrategyCard({
     loadingEarnings,
     valueError,
     earningsError,
+    onInvestClick,
 }: StrategyCardProps) {
     return (
         <Card className={classnames(styles.strategyCard, className)}>
@@ -58,7 +57,9 @@ function StrategyCard({
                 ))}
             </div>
             <div className={styles.actionButtons}>
-                <Button color="primary">Invest</Button>
+                <Button color="primary" onClick={onInvestClick}>
+                    Invest
+                </Button>
                 <Button color="secondary">View detail&nbsp;&rsaquo;</Button>
             </div>
         </Card>

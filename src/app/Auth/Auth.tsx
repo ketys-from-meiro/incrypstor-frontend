@@ -1,17 +1,10 @@
 import React from "react"
 import { configureChains, createClient, chain, WagmiConfig } from "wagmi"
 import { InjectedConnector } from "wagmi/connectors/injected"
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc"
+import { publicProvider } from "wagmi/providers/public"
 import AuthProvider from "./AuthProvider"
 
-const { chains, provider } = configureChains(
-    [chain.goerli],
-    [
-        jsonRpcProvider({
-            rpc: () => ({ http: "http://127.0.0.1:8545" }),
-        }),
-    ],
-)
+const { chains, provider } = configureChains([chain.goerli], [publicProvider()])
 
 const client = createClient({
     autoConnect: true,

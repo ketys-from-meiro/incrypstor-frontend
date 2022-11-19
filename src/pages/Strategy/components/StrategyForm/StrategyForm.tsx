@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { CONTRACT_ADDRESS } from "consts"
 import { useContractRead } from "wagmi"
 import approvedTokensAbi from "abi/ApprovedTokens.abi"
@@ -35,22 +35,26 @@ function StrategyForm({ onSubmit, submitting }: StrategyFormProps) {
         handleSubmit,
         formState: { errors },
         control,
-    } = useForm<StrategyFormData>({
-        defaultValues: {
-            tokensParams: approvedTokens
-                ? approvedTokens.map(token => ({
-                      addr: token.addr,
-                      percentage: 0,
-                  }))
-                : [],
-        },
-    })
+        setValue,
+    } = useForm<StrategyFormData>()
     const { fields } = useFieldArray({ control, name: "tokensParams" })
 
     const getTokenSymbol = (address: string) => {
         const token = approvedTokens?.find(token => token.addr === address)
         return token ? token.symbol : ""
     }
+
+    useEffect(() => {
+        if (approvedTokens) {
+            setValue(
+                "tokensParams",
+                approvedTokens.map(token => ({
+                    addr: token.addr,
+                    percentage: 0,
+                })),
+            )
+        }
+    }, [approvedTokens, setValue])
 
     if (isLoadingApprovedTokens) return <LoadingIndicator />
 
