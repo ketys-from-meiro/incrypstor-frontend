@@ -9,6 +9,10 @@
     transition: all 0.15s ease-out;
     border-radius: 8px;
 
+    &:focus {
+        outline: none;
+    }
+
     // colors
     &.primary {
         border: 1px solid colors.$primary;

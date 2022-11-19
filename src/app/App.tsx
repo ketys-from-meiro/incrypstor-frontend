@@ -26,7 +26,7 @@ function App() {
                     <Route path="strategies">
                         <Route index element={<StrategiesDashboard />} />
                         <Route path="create" element={<StrategyCreate />} />
-                        <Route path=":id">
+                        <Route path=":strategyId">
                             <Route index element={<StrategyDetail />} />
                             <Route path="edit" element={<StrategyEdit />} />
                         </Route>

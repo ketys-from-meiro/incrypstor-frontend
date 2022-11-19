@@ -9,6 +9,7 @@ import useAuth from "app/Auth/useAuth"
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator"
 import InvestModalForm from "../components/InvestModalForm/InvestModalForm"
 import { Strategy } from "../strategyTypes"
+import PerformanceChart from "../components/PerformanceChart/PerformanceChart"
 
 function StrategiesDashboard() {
     type InvestModalState =
@@ -52,27 +53,35 @@ function StrategiesDashboard() {
     }
 
     return (
-        <div className={styles.strategiesDashboard}>
-            {userStrategies?.map(strategy => (
-                <StrategyCard
-                    key={strategy.id.toString()}
-                    loadingValue={false}
-                    value={1234.09}
-                    loadingEarnings={false}
-                    earnings={-143.1}
-                    onInvestClick={() => handleInvestClick(strategy)}
-                    {...strategy}
-                />
-            ))}
-            <CreateNewStrategyCard />
-            {investModal.isOpen && (
-                <InvestModalForm
-                    isOpen={investModal.isOpen}
-                    onClose={closeInvestModal}
-                    strategy={investModal.strategy}
-                />
-            )}
-        </div>
+        <>
+            <div className={styles.portfolioPerformance}>
+                <h1>Portfolio performance</h1>
+                <div className={styles.performanceChart}>
+                    <PerformanceChart />
+                </div>
+            </div>
+            <div className={styles.strategiesDashboard}>
+                {userStrategies?.map(strategy => (
+                    <StrategyCard
+                        key={strategy.id.toString()}
+                        loadingValue={false}
+                        value={1234.09}
+                        loadingEarnings={false}
+                        earnings={-143.1}
+                        onInvestClick={() => handleInvestClick(strategy)}
+                        {...strategy}
+                    />
+                ))}
+                <CreateNewStrategyCard />
+                {investModal.isOpen && (
+                    <InvestModalForm
+                        isOpen={investModal.isOpen}
+                        onClose={closeInvestModal}
+                        strategy={investModal.strategy}
+                    />
+                )}
+            </div>
+        </>
     )
 }
 

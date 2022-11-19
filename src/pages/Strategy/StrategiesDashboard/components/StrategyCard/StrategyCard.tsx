@@ -5,8 +5,13 @@ import Card from "components/Card/Card"
 import TokenLogo from "components/TokenLogo/TokenLogo"
 import Button from "components/Button/Button"
 import { TokenParams } from "pages/Strategy/strategyTypes"
+import { useNavigate } from "react-router-dom"
+import { BigNumber } from "ethers"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 
 export type StrategyCardProps = {
+    id: BigNumber
     className?: string
     name: string
     value?: number
@@ -20,6 +25,7 @@ export type StrategyCardProps = {
 }
 
 function StrategyCard({
+    id,
     className,
     name,
     value,
@@ -31,6 +37,8 @@ function StrategyCard({
     earningsError,
     onInvestClick,
 }: StrategyCardProps) {
+    const navigate = useNavigate()
+
     return (
         <Card className={classnames(styles.strategyCard, className)}>
             <h2>{name}</h2>
@@ -57,10 +65,12 @@ function StrategyCard({
                 ))}
             </div>
             <div className={styles.actionButtons}>
-                <Button color="primary" onClick={onInvestClick}>
-                    Invest
+                <Button color="primary" onClick={onInvestClick} className={styles.investButton}>
+                    <FontAwesomeIcon icon={faPaperPlane} /> Invest
                 </Button>
-                <Button color="secondary">View detail&nbsp;&rsaquo;</Button>
+                <Button color="secondary" onClick={() => navigate(`/strategies/${id.toString()}`)}>
+                    View detail&nbsp;&rsaquo;
+                </Button>
             </div>
         </Card>
     )

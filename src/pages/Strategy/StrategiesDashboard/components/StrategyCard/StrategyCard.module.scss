@@ -55,4 +55,15 @@
         display: flex;
         justify-content: space-between;
     }
+
+    .investButton {
+        > span {
+            display: flex;
+            align-items: center;
+
+            svg {
+                margin-right: 8px;
+            }
+        }
+    }
 }
