@@ -5,7 +5,7 @@ import styles from "./Button.module.scss"
 type ButtonProps = {
     children: React.ReactNode
     className?: string
-    color?: "primary" | "secondary"
+    color?: "primary" | "secondary" | "danger"
     size?: "sm" | "md" | "lg"
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
     type?: "button" | "submit"

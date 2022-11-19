@@ -82,6 +82,7 @@
 
     .tokensSection {
         display: flex;
+        justify-content: space-between;
 
         .tokensList {
             flex-basis: 50%;
@@ -127,5 +128,10 @@
                 }
             }
         }
+    }
+
+    .tokensPercentageChart {
+        flex-basis: 30%;
+        margin-left: 25px;
     }
 }

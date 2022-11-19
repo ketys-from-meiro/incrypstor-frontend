@@ -15,7 +15,7 @@ import { Strategy } from "pages/Strategy/strategyTypes"
 import { ethers } from "ethers"
 import { toast } from "react-toastify"
 
-const ONE_QUOTE_GAS_LIMIT = 280000
+const ONE_QUOTE_GAS_LIMIT = 300000
 const INVEST_TX_BASE_GAS_LIMIT = 200000
 
 type InvestModalFormProps = {
@@ -179,40 +179,3 @@ function InvestModalForm({ isOpen, onClose, strategy }: InvestModalFormProps) {
 }
 
 export default InvestModalForm
-
-/*
-function StrategyCreate() {
-    
-
-    useEffect(() => {
-        if (isContractWriteSuccess) {
-            setSubmittingData(null)
-        }
-    }, [isContractWriteSuccess])
-
-    
-
-    const createStrategy = (data: StrategyFormData) => {
-        setSubmittingData(data)
-    }
-
-    return (
-        <div className={styles.strategyCreate}>
-            {isWaitingForTransaction ? (
-                <>
-                    <h1>Waiting for transaction</h1>
-                    <LoadingIndicator />
-                </>
-            ) : (
-                <>
-                    <h1>Create your investment strategy</h1>
-                    <StrategyForm onSubmit={createStrategy} submitting={submittingData !== null} />
-                </>
-            )}
-            {}
-        </div>
-    )
-}
-
-export default StrategyCreate
-*/

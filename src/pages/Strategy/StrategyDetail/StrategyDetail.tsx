@@ -4,7 +4,7 @@ import { useContractReads } from "wagmi"
 import styles from "./StrategyDetail.module.scss"
 import strategiesManagerAbi from "abi/StrategiesManager.abi"
 import useAuth from "app/Auth/useAuth"
-import { BigNumber } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { useNavigate, useParams } from "react-router-dom"
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -15,6 +15,7 @@ import InvestModalForm from "../components/InvestModalForm/InvestModalForm"
 import PerformanceChart from "../components/PerformanceChart/PerformanceChart"
 import { getTokenInfo } from "../strategyUtils"
 import TokenLogo from "components/TokenLogo/TokenLogo"
+import TokensPercentageChart from "./components/TokensPercentageChart"
 
 const strategyContract = {
     address: CONTRACT_ADDRESS.STRATEGY_MANAGER,
@@ -47,6 +48,7 @@ function StrategyDetail() {
     }
 
     const strategy = data![0]
+    console.log(strategy)
 
     return (
         <div className={styles.strategyDetail}>
@@ -91,7 +93,13 @@ function StrategyDetail() {
                                     <div className={styles.tokenInfo}>
                                         <div className={styles.firstRow}>
                                             <span>{tokenInfo?.symbol ?? "N/A"}</span>
-                                            <span>Target: {tokenParam.percentage}%</span>
+                                            <span>
+                                                Target: {tokenParam.percentage}
+                                                %&nbsp;/&nbsp;Balance:{" "}
+                                                {(+ethers.utils.formatEther(
+                                                    tokenParam.holdings,
+                                                )).toFixed(3)}
+                                            </span>
                                         </div>
                                         <div className={styles.secondRow}>
                                             {tokenInfo?.description ?? "N/A"}
@@ -102,6 +110,10 @@ function StrategyDetail() {
                         })}
                     </ul>
                 </div>
+                <div className={styles.tokensPercentageChart}>
+                    <TokensPercentageChart />
+                </div>
+                <Button color="danger">Close strategy</Button>
             </div>
             {isInvestModalOpen && (
                 <InvestModalForm

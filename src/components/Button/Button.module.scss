@@ -36,6 +36,17 @@
         }
     }
 
+    &.danger {
+        border: 1px solid colors.$red;
+        background-color: colors.$red;
+        color: colors.$white;
+
+        &:hover {
+            background-color: colors.$white;
+            color: colors.$red;
+        }
+    }
+
     // sizes
     &.sm {
         height: 34px;
