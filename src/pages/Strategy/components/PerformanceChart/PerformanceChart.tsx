@@ -11,7 +11,7 @@ export type Series = {
     data: DayValue[]
 }
 
-const data: Series[] = [
+const dataDetail: Series[] = [
     {
         label: "Investments",
         data: [
@@ -64,7 +64,60 @@ const data: Series[] = [
     },
 ]
 
-function PerformanceChart() {
+const dataDashboard: Series[] = [
+    {
+        label: "Investments",
+        data: [
+            {
+                date: new Date("2022-10-24"),
+                value: 0,
+            },
+            {
+                date: new Date("2022-10-31"),
+                value: 700,
+            },
+            {
+                date: new Date("2022-11-07"),
+                value: 1400,
+            },
+            {
+                date: new Date("2022-11-14"),
+                value: 2100,
+            },
+            {
+                date: new Date("2022-11-21"),
+                value: 2754.38,
+            },
+        ],
+    },
+    {
+        label: "Valuation",
+        data: [
+            {
+                date: new Date("2022-10-24"),
+                value: 0,
+            },
+            {
+                date: new Date("2022-10-31"),
+                value: 700,
+            },
+            {
+                date: new Date("2022-11-07"),
+                value: 1466.22,
+            },
+            {
+                date: new Date("2022-11-14"),
+                value: 2122.43,
+            },
+            {
+                date: new Date("2022-11-21"),
+                value: 2468.18,
+            },
+        ],
+    },
+]
+
+function PerformanceChart({ dataType = "detail" }: { dataType?: "detail" | "dashboard" }) {
     const primaryAxis = React.useMemo(
         (): AxisOptions<DayValue> => ({
             getValue: datum => datum.date,
@@ -84,7 +137,7 @@ function PerformanceChart() {
     return (
         <Chart
             options={{
-                data,
+                data: dataType === "detail" ? dataDetail : dataDashboard,
                 primaryAxis,
                 secondaryAxes,
                 interactionMode: "primary",

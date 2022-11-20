@@ -1,6 +1,6 @@
-import { CONTRACT_ADDRESS } from "consts"
-import React, { useState } from "react"
-import { useContractReads } from "wagmi"
+import { CONTRACT_ADDRESS, API, CHAIN_ID } from "consts"
+import React, { useEffect, useState } from "react"
+import { useContractReads, useContractWrite, useWaitForTransaction } from "wagmi"
 import styles from "./StrategyDetail.module.scss"
 import strategiesManagerAbi from "abi/StrategiesManager.abi"
 import useAuth from "app/Auth/useAuth"
@@ -16,6 +16,10 @@ import PerformanceChart from "../components/PerformanceChart/PerformanceChart"
 import { getTokenInfo } from "../strategyUtils"
 import TokenLogo from "components/TokenLogo/TokenLogo"
 import TokensPercentageChart from "./components/TokensPercentageChart"
+import { toast } from "react-toastify"
+
+const ONE_QUOTE_GAS_LIMIT = 350000
+const CLOSE_STRATEGY_TX_BASE_GAS_LIMIT = 350000
 
 const strategyContract = {
     address: CONTRACT_ADDRESS.STRATEGY_MANAGER,
@@ -27,6 +31,28 @@ function StrategyDetail() {
     const auth = useAuth()
     const navigate = useNavigate()
     const { strategyId } = useParams()
+
+    type Quote = {
+        token: `0x${string}`
+        spender: `0x${string}`
+        swapCallData: `0x${string}`
+        gasPrice: BigNumber
+    }
+    type QuotesState = {
+        isLoading: boolean
+        quotesLoaded: number
+        nonWethTxsGas: number
+        quotes: Quote[]
+    }
+    const [quotesTotalGasPrice, setQuotesTotalGasPrice] = useState<BigNumber>(BigNumber.from("0"))
+    const [quotes, setQuotes] = useState<QuotesState>({
+        isLoading: false,
+        quotesLoaded: 0,
+        nonWethTxsGas: 0,
+        quotes: [],
+    })
+
+    // TODO: refactor into single read...
     const {
         data,
         isLoading: isLoadingData,
@@ -41,14 +67,96 @@ function StrategyDetail() {
         ],
     })
 
-    if (isLoadingData) return <LoadingIndicator />
+    const {
+        write,
+        data: dataContractWrite,
+        isLoading: isDataContractWriteLoading,
+        isError: isContractWriteError,
+        isSuccess: isContractWriteSuccess,
+    } = useContractWrite({
+        ...strategyContract,
+        functionName: "closeStrategy",
+        args: [data?.[0]?.id ?? BigNumber.from("0"), quotes.quotes],
+        mode: "recklesslyUnprepared",
+        chainId: CHAIN_ID,
+        overrides: {
+            value: quotesTotalGasPrice ?? BigNumber.from("0"),
+            gasLimit: BigNumber.from(CLOSE_STRATEGY_TX_BASE_GAS_LIMIT + quotes.nonWethTxsGas),
+        },
+    })
+    const { isLoading: isWaitingForTransaction, isSuccess: isTransactionSuccessful } =
+        useWaitForTransaction({
+            hash: dataContractWrite?.hash,
+        })
+
+    useEffect(() => {
+        if (quotes.quotesLoaded === data?.[0]?.tokensParams.length) {
+            setQuotes(prevState => ({
+                ...prevState,
+                isLoading: false,
+            }))
+            write?.()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [quotes.quotesLoaded, data?.[0]?.tokensParams.length])
+
+    useEffect(() => {
+        if (isContractWriteError) {
+            setQuotesTotalGasPrice(BigNumber.from("0"))
+            setQuotes({ isLoading: false, quotesLoaded: 0, nonWethTxsGas: 0, quotes: [] })
+        }
+    }, [isContractWriteError])
+
+    useEffect(() => {
+        if (isTransactionSuccessful && isContractWriteSuccess) {
+            toast.success("Strategy closed, funds sent to your wallet.")
+            navigate("/")
+        }
+    }, [isTransactionSuccessful, isContractWriteSuccess, navigate])
+
+    if (isLoadingData || !data || !data[0]) return <LoadingIndicator />
     if (isError) {
         // TODO:
         return <p>Something went wrong...</p>
     }
 
-    const strategy = data![0]
-    console.log(strategy)
+    const strategy = data[0]
+
+    const onCloseStrategyClick = () => {
+        setQuotes({ isLoading: true, quotesLoaded: 0, nonWethTxsGas: 0, quotes: [] })
+        strategy.tokensParams.forEach(async tokenParam => {
+            if (tokenParam.addr !== CONTRACT_ADDRESS.WETH) {
+                const qs = new URLSearchParams({
+                    buyToken: CONTRACT_ADDRESS.WETH,
+                    sellToken: tokenParam.addr,
+                    sellAmount: tokenParam.holdings.toString(),
+                }).toString()
+                const quoteUrl = `${API.ZERO_X}swap/v1/quote?${qs}`
+                const response = await fetch(quoteUrl)
+                const quote = await response.json()
+                setQuotesTotalGasPrice(prevState => prevState.add(quote.gasPrice))
+                setQuotes(prevState => ({
+                    ...prevState,
+                    quotesLoaded: prevState.quotesLoaded + 1,
+                    nonWethTxsGas: prevState.nonWethTxsGas + ONE_QUOTE_GAS_LIMIT,
+                    quotes: [
+                        ...prevState.quotes,
+                        {
+                            token: quote.sellTokenAddress,
+                            spender: quote.allowanceTarget,
+                            swapCallData: quote.data,
+                            gasPrice: quote.gasPrice,
+                        },
+                    ],
+                }))
+            } else {
+                setQuotes(prevState => ({
+                    ...prevState,
+                    quotesLoaded: prevState.quotesLoaded + 1,
+                }))
+            }
+        })
+    }
 
     return (
         <div className={styles.strategyDetail}>
@@ -113,7 +221,16 @@ function StrategyDetail() {
                 <div className={styles.tokensPercentageChart}>
                     <TokensPercentageChart />
                 </div>
-                <Button color="danger">Close strategy</Button>
+                <div className={styles.actionButtons}>
+                    <Button color="secondary">Rebalance (coming soon)</Button>
+                    <Button
+                        isLoading={isDataContractWriteLoading || isWaitingForTransaction}
+                        color="danger"
+                        onClick={onCloseStrategyClick}
+                    >
+                        Close & withdraw
+                    </Button>
+                </div>
             </div>
             {isInvestModalOpen && (
                 <InvestModalForm

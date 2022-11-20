@@ -87,6 +87,11 @@ export default [
     },
     {
         inputs: [],
+        name: "StrategyWithdrawalFailed",
+        type: "error",
+    },
+    {
+        inputs: [],
         name: "TokenNotApproved",
         type: "error",
     },
@@ -186,6 +191,25 @@ export default [
                 type: "uint256",
             },
         ],
+        name: "StrategyClosed",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "address",
+                name: "user",
+                type: "address",
+            },
+            {
+                indexed: true,
+                internalType: "uint256",
+                name: "strategyId",
+                type: "uint256",
+            },
+        ],
         name: "StrategyCreated",
         type: "event",
     },
@@ -262,6 +286,46 @@ export default [
     {
         inputs: [
             {
+                internalType: "uint256",
+                name: "strategyId_",
+                type: "uint256",
+            },
+            {
+                components: [
+                    {
+                        internalType: "address",
+                        name: "token",
+                        type: "address",
+                    },
+                    {
+                        internalType: "address",
+                        name: "spender",
+                        type: "address",
+                    },
+                    {
+                        internalType: "bytes",
+                        name: "swapCallData",
+                        type: "bytes",
+                    },
+                    {
+                        internalType: "uint256",
+                        name: "gasPrice",
+                        type: "uint256",
+                    },
+                ],
+                internalType: "struct IStrategiesManager.ZeroXApiQuote[]",
+                name: "swapQuotes_",
+                type: "tuple[]",
+            },
+        ],
+        name: "closeStrategy",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
                 internalType: "string",
                 name: "name_",
                 type: "string",
@@ -299,7 +363,7 @@ export default [
         inputs: [
             {
                 internalType: "address",
-                name: "address_",
+                name: "user_",
                 type: "address",
             },
         ],
@@ -352,7 +416,7 @@ export default [
         inputs: [
             {
                 internalType: "address",
-                name: "address_",
+                name: "user_",
                 type: "address",
             },
             {

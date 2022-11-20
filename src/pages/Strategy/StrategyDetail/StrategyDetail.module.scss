@@ -131,7 +131,15 @@
     }
 
     .tokensPercentageChart {
-        flex-basis: 30%;
+        flex-basis: 28%;
         margin-left: 25px;
+    }
+
+    .actionButtons {
+        text-align: right;
+        flex-basis: 22%;
+        button {
+            margin-bottom: 10px;
+        }
     }
 }

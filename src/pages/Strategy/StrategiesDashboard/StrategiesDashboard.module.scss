@@ -1,3 +1,5 @@
+@use "scss/colors";
+
 .strategiesDashboard {
     width: 100%;
     display: grid;
@@ -14,5 +16,39 @@
         width: 100%;
         height: 350px;
         margin: 10px 0 30px;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+
+
+        .valuation { 
+            display: flex;
+    
+            > div {
+                margin-right: 25px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+            span {
+                font-weight: bold;
+    
+                &.red {
+                    color: colors.$red;
+                }
+            }
+
+            label {
+                text-transform: uppercase;
+                font-size: 13px;
+                font-weight: 500;
+                color: colors.$grey;
+                margin-bottom: 3px;
+                display: block;
+            }
+        }
     }
 }

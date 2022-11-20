@@ -15,8 +15,8 @@ import { Strategy } from "pages/Strategy/strategyTypes"
 import { ethers } from "ethers"
 import { toast } from "react-toastify"
 
-const ONE_QUOTE_GAS_LIMIT = 300000
-const INVEST_TX_BASE_GAS_LIMIT = 200000
+const ONE_QUOTE_GAS_LIMIT = 350000
+const INVEST_TX_BASE_GAS_LIMIT = 250000
 
 type InvestModalFormProps = {
     isOpen: boolean

@@ -31,7 +31,6 @@ function StrategiesDashboard() {
         abi: strategiesManagerAbi,
         functionName: "getUserStrategies",
         args: [auth.address!],
-        cacheTime: 2_000,
     })
 
     const handleInvestClick = (strategy: Strategy) => {
@@ -55,9 +54,21 @@ function StrategiesDashboard() {
     return (
         <>
             <div className={styles.portfolioPerformance}>
-                <h1>Portfolio performance</h1>
+                <header>
+                    <h1>Portfolio performance</h1>
+                    <div className={styles.valuation}>
+                        <div>
+                            <label>Value</label>
+                            <span>2468.18 ETH</span>
+                        </div>
+                        <div>
+                            <label>Earnings</label>
+                            <span className={styles.red}>-286.2 ETH</span>
+                        </div>
+                    </div>
+                </header>
                 <div className={styles.performanceChart}>
-                    <PerformanceChart />
+                    <PerformanceChart dataType="dashboard" />
                 </div>
             </div>
             <div className={styles.strategiesDashboard}>
